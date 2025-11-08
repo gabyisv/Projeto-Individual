@@ -1,0 +1,160 @@
+
+.section-rodape {
+    display: flex;
+    flex-direction: column;
+    margin:  auto;
+    justify-content: center;
+    align-items: center;
+    background-color: #0B060C;
+}
+
+.container-titulos {
+    display: flex;
+    gap:  20px;
+    padding: 30px;
+}
+
+.container-titulos a{
+    color: #ffff;
+    font-family: "Montagu Slab", serif;
+    text-decoration: none;
+}
+
+.container-logo-rodape {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+
+.login {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+body {
+  background-color: #1E0E1F;
+  margin: 0;
+}
+
+.container {
+  background-color: #CCABCF;
+  width: 50%;
+  height: 78%;
+  padding: 10px;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card-cadastro {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex-direction: column;
+}
+
+.card-cadastro h2{
+  color: #0B060C;
+  font-family: "Montagu Slab", serif;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: "Montagu Slab", serif;
+  font-size: 18px;
+}
+
+.formulario a {
+  text-decoration: none;
+  color: #1E0E1F;
+  font-weight: 600;
+}
+
+a {
+  cursor: pointer;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 5px;
+}
+
+.campo input {
+  width: 500px;
+  border-radius: 20px;
+  padding: 18px;
+  border: none;
+  text-align: left;
+}
+
+.botao {
+  padding: 15px;
+  border: none;
+  border-radius: 20px;
+  color: #ffff;
+  background-color: #1E0E1F;
+  margin-bottom: 35px;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: "Montagu Slab", serif;
+  
+}
+
+.botao:hover {
+  cursor: pointer;
+  background-color: #0B060C;
+}
+
+.teste-cadastro  {
+  display: flex;
+  position: absolute;
+  left: 540px;
+  bottom: 0px;
+}
+
+.card-login {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  flex-direction: column;
+}
+
+.card-login  h2 {
+  color: #0B060C;
+  font-family: "Montagu Slab", serif;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.container-login {
+  background-color: #CCABCF;
+  width: 50%;
+  height: 55%;
+  padding: 10px;
+  border-radius: 20px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 100px;
+}
+
+.container-login p{
+  text-align: left;
+}
