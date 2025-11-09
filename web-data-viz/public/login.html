@@ -19,7 +19,7 @@
 
 
     <div class="login">
-        <div class="alerta_erro">
+        <div class="alerta_erro-login">
             <div class="card_erro" id="cardErro">
                 <span id="mensagem_erro"></span>
             </div>
@@ -95,7 +95,7 @@
 
         if (emailVar == "" || senhaVar == "") {
             cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            mensagem_erro.innerHTML = "Por favor, preencha todos os campos para continuar.";
             finalizarAguardar();
             return false;
         }

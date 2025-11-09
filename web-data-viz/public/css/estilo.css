@@ -45,7 +45,7 @@ body {
 .container {
   background-color: #CCABCF;
   width: 50%;
-  height: 78%;
+  height: 86%;
   padding: 10px;
   border-radius: 20px;
   align-items: center;
@@ -144,7 +144,7 @@ a {
 .container-login {
   background-color: #CCABCF;
   width: 50%;
-  height: 55%;
+  height: 70%;
   padding: 10px;
   border-radius: 20px;
   align-items: center;
@@ -152,9 +152,17 @@ a {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.alerta_erro-login {
   margin-top: 100px;
 }
 
 .container-login p{
   text-align: left;
+}
+
+#mensagem_erro {
+  color: #ffff;
+  font-weight: 600;
 }
