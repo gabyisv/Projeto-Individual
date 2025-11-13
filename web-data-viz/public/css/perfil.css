@@ -1,0 +1,161 @@
+.secao-perfil {
+    margin-left: 400px;
+}
+
+.titulo-alinhamento h1 {
+   font-family: "Montagu Slab", serif;
+    font-size: 22px;
+    color: #DBAF4F;
+}
+
+.container-alteracao {
+    border: solid 2px;
+    border-color: #DBAF4F;
+    padding: 10px;
+    border-radius: 20px;
+    width: 90%;
+    box-shadow: rgba(255, 255, 255, 0.588) 0px 1px 2px 0px, rgba(255, 255, 255, 0.374) 0px 2px 6px 2px;
+}
+
+.container-alteracao h2 {
+    color: #DBAF4F;
+    margin-left: 16px;
+}
+
+.alteracao-informacao {
+    display: flex;
+    flex-direction: column;
+    margin-left: 22px;
+}
+
+.campo-alterar {
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    border: solid 1px;
+    width: 50%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border-color: #D9D9D9;
+    background-color: #0C030D;
+}
+
+.titulo-alterar {
+    color: #DBAF4F;
+    font-weight: 600;
+} 
+
+.container-botao-alinhar {
+    display: flex;
+    gap: 46px;
+}
+
+.container-botao-alinhar button {
+    width: 42%;
+    border-radius: 10px;
+    height: 54px;
+    margin-right: 20px;
+    background-color: #DBAF4F;
+    color: #0C030D;
+    font-family: "Montagu Slab", serif;
+    font-size: 18px;
+    font-weight: 600;
+}       
+
+.container-secao {
+    display: flex;
+    gap: 40px;
+}
+
+.info-01 {
+border: solid 2px;
+    border-color: #DBAF4F;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 20px;
+    width:42.5%;
+    box-shadow: rgba(255, 255, 255, 0.588) 0px 1px 2px 0px, rgba(255, 255, 255, 0.374) 0px 2px 6px 2px;
+}
+
+.info-01 .alteracao-informacao{
+    margin: 0;
+    display: flex;
+}
+
+.info-01 .campo-alterar {
+    width: 100%;
+    display: flex;
+}
+
+.botao-seguranca{
+    width: 100%;
+     border-radius: 10px;
+    height: 54px;
+    margin-right: 20px;
+    background-color: #DBAF4F;
+    color: #0C030D;
+    font-family: "Montagu Slab", serif;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.imagens-personalizar {
+    display: flex;
+    justify-content: space-around;
+}
+
+.imagens-personalizar img {
+    width: 80px;
+}
+
+.personalizar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.container-botoes {
+    display: flex;
+    justify-content: space-around;
+}
+
+.container-botoes button {
+    width: 47%;
+    border: none;
+    border-radius: 10px;
+    padding: 8px;
+    font-weight: 600;
+}
+
+.desconectar-conta {
+    background-color: #DBAF4F;
+    color: #0C030D;
+    font-family: "Montagu Slab", serif;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: rgba(255, 255, 255, 0.588) 0px 1px 2px 0px, rgba(255, 255, 255, 0.374) 0px 2px 6px 2px;
+
+}
+
+.deletar-conta {
+    background-color: #CD0E0E;
+    color: #ffff;
+    font-family: "Montagu Slab", serif;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: rgba(255, 255, 255, 0.588) 0px 1px 2px 0px, rgba(255, 255, 255, 0.374) 0px 2px 6px 2px;
+
+}
+
+.botoes-conta {
+    display: flex;
+}
+
+.botoes-conta p {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    font-weight: 400;
+}

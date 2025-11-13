@@ -286,3 +286,8 @@ body {
     align-items: center;
     margin-bottom: 30px;
 }
+
+
+label {
+    color: #fff;
+}

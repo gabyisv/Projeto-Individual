@@ -126,7 +126,7 @@ body {
 }
 
 .posicao-borda-resumo img {
-    width:600px;
+    width:90px;
 }
 
 .alinhar-foto-resumo {
@@ -135,11 +135,12 @@ body {
 }
 
 .alinhar-foto-resumo img {
-    width: 700px;
+    width: 650px;
+    height: 400px;
 }
 
 .section-resumo-linhagem {
-    margin: 150px;
+    margin: 120px;
 }
 
 .section-resumo-linhagem h2 {

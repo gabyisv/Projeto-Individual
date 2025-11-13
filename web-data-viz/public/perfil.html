@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/perfil.css">
+    <link rel="stylesheet" href="./css/fonts/fonte.css">
+</head>
+
+<body>
+    <nav id="menu-nav" class="menu-nav">
+        <div class="logo-nav-lateral">
+            <div class="icon-nav">
+                <img src="./assets/image 18.png" alt="">
+                <h2>Olá, Gabrielly </h2>
+
+                <ul>
+                    <li>
+                        <a href="#">Centro de Dados</a>
+                    </li>
+                    <li>
+                        <a href="#">Questionário</a>
+                    </li>
+                    <li>
+                        <a href="#">Elenco Estelar</a>
+                    </li>
+                    <li>
+                        <a href="#">Perfil</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sair-nav">
+            <p>Sair</p>
+        </div>
+    </nav>
+
+    <section class="secao-perfil">
+        <div class="titulo-alinhamento">
+            <h1> Configurações Estelar</h1>
+        </div>
+
+        <div class="container-alteracao">
+            <h2> Informações Básicas </h2>
+
+            <div class="alteracao-informacao">
+                <div class="campo-alterar">
+                    <p class="titulo-alterar"> Nome de Usuário: </p>
+                    <p> Gabrielly </p>
+                </div>
+
+                <div class="campo-alterar">
+                    <p class="titulo-alterar"> E-mail: </p>
+                    <p> gabrielly@gmail.com </p>
+                </div>
+
+                <div class="container-botao-alinhar">
+                    <div class="campo-alterar">
+                        <p class="titulo-alterar"> Data de Nascimento </p>
+                        <p> 22/12/2006 </p>
+                    </div>
+                    <button onclick="salvar()">Salvar Informações</button>
+                </div>
+            </div>
+        </div>
+
+        <section class="container-secao ">
+
+            <div class="info-01">
+                <div class="titulo-alinhamento">
+                    <h1> Segurança </h1>
+                </div>
+                <div class="alteracao-informacao">
+                    <div class="campo-alterar">
+                        <p class="titulo-alterar"> Alterar Senha </p>
+                    </div>
+
+                    <div class="campo-alterar">
+                        <p class="titulo-alterar"> Confirmar Senha </p>
+                    </div>
+                    
+                    
+                </div>
+                <button onclick="salvar()" class="botao-seguranca">Salvar Alterações</button>
+            </div>
+
+            <div class="info-01 personalizar">
+                <div class="titulo-alinhamento">
+                    <h1> Personalização </h1>
+                </div>
+
+                <div class="alteracao-informacao">
+                    <div class="imagens-personalizar">
+                        <img src="./assets/image 18.png" alt="">
+                        <img src="./assets/image 18.png" alt="">
+                        <img src="./assets/image 18.png" alt="">
+                    </div>
+                    
+                </div>
+                <button onclick="salvar()" class="botao-seguranca">Salvar Personalizacao</button>
+            </div>
+
+        </section>
+
+        <section class="botoes-conta">
+            <div class="info-01">
+                <div class="titulo-alinhamento">
+                    <h1> Seção de Conta </h1>
+                </div>
+                <div class="container-botoes">
+                    <button class="desconectar-conta"> Desconectar Stand </button>
+                    <button class="deletar-conta">Deletar Conta </button>
+                </div>
+            </div>
+                <p>Seu destino pode mudar, mas seu Stand sempre te <br> acompanhará.</p>
+        </section>
+    </section>
+</body>
+
+</html>
