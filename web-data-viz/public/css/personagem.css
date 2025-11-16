@@ -1,0 +1,51 @@
+.card {
+    display: flex;
+    margin-left: 300px;
+    border: solid;
+    border-color: #E49C00;
+    padding: 3% 1% 0;
+    border-radius: 15px;
+    box-shadow: rgba(255, 255, 255, 0.588) 0px 1px 2px 0px, rgba(255, 255, 255, 0.374) 0px 2px 6px 2px;
+
+}
+
+#cardsPersonagens {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+   gap: 50px;
+   justify-content: center;
+
+}
+
+
+
+.container-card {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+
+.container-card h2 {
+    text-align: center;
+    padding: 3%;
+}
+
+.nome-stand {
+    background-color: #110012;
+    width: 100%;
+    display: flex;
+}
+
+.nome-stand p {
+    display: flex;
+    width: 200px;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+#select_tipoMostra {
+    margin-left: 300px;
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/nav.css">
+  <link rel="stylesheet" href="./css/personagem.css">
+  <link rel="stylesheet" href="./css/fonts/fonte.css">
+</head>
+
+<body>
+  <nav id="menu-nav" class="menu-nav">
+    <div class="logo-nav-lateral">
+      <div class="icon-nav">
+        <img src="./assets/image 18.png" alt="">
+        <h2>Olá, Gabrielly </h2>
+
+        <ul>
+          <li>
+            <a href="#">Centro de Dados</a>
+          </li>
+          <li>
+            <a href="quiz.html">Questionário</a>
+          </li>
+          <li>
+            <a href="personagem.html">Elenco Estelar</a>
+          </li>
+          <li>
+            <a href="perfil.html">Perfil</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sair-nav">
+      <p>Sair</p>
+    </div>
+  </nav>
+
+  <select name="" id="select_tipoMostra" onclick="mostrarCards()">
+    <option value="#" disabled selected>Selecione</option>
+    <option value="personagem">Personagem</option>
+    <option value="stand">Stand</option>
+  </select>
+
+  <select name="" id="select_temporadaMostrar" onclick="filtrarPersonagem()">
+    <option value="#" disabled selected>Selecione</option>
+    <option value="1">Parte 1</option>
+    <option value="2">Parte 2</option>
+    <option value="3">Parte 3</option>
+    <option value="4">Parte 4</option>
+    <option value="5">Parte 5</option>
+    <option value="6">Parte 6</option>
+    <option value="7">Parte 7</option>
+    <option value="8">Parte 8</option>
+    <option value="9">Parte 9</option>
+  </select>
+
+  <div id="cardsPersonagens" style="display: none"></div>
+
+
+</body>
+
+</html>
+<script>
+  var listaPersonagens = [];
+  var container = cardsPersonagens;
+
+  
+    function listarPersonagens() {
+      fetch("/personagem/listar")
+        .then(resposta => resposta.json())
+        .then(personagens => {
+          listaPersonagens = personagens;
+          mostrarCards(); 
+        })
+        .catch(erro => console.log(`#ERRO: ${erro}`));
+    }
+
+
+    function mostrarCards() {
+      var tipo_mostrar = select_tipoMostra.value;
+
+      container.innerHTML = "";
+
+      if (tipo_mostrar == "personagem") {
+        cardsPersonagens.style.display = "flex";
+        listaPersonagens.forEach(p => {
+          container.innerHTML += `
+      <div class="card">
+        <div class="container-card">
+          <h2>${p.nomePersonagem}</h2>
+          <div class="nome-stand">
+            <p> ${p.nomeStand} </p>
+            <h2> ${p.nomeHabilidade} </h2>
+            </div>
+            </div>
+            </div>
+            `;
+        })
+      } else if (tipo_mostrar == "stand") {
+        cardsPersonagens.style.display = "flex";
+        listaPersonagens.forEach(p => {
+          container.innerHTML += `
+              <div class="card">
+                <div class="container-card">
+                  <h2>${p.nomeStand}</h2>
+                  
+        <div class="nome-stand">
+          <p> ${p.nomePersonagem} </p>
+          </div>
+          </div>
+          </div>
+          `;
+        })
+      };
+    }
+
+    
+    function filtrarPersonagem() {
+  var container = cardsPersonagens;
+  var parte_selecionada = select_temporadaMostrar.value;
+
+  container.innerHTML = "";
+
+ 
+  var filtrados = listaPersonagens.filter(p => 
+   p.idsTemporadas && p.idsTemporadas.includes(parte_selecionada)
+  );
+
+
+  filtrados.forEach(p => {
+    cardsPersonagens.style.display = "flex";
+
+    container.innerHTML += `
+      <div class="card">
+        <div class="container-card">
+          <h2>${p.nomePersonagem}</h2>
+          <div class="nome-stand">
+            <p>${p.temporadas}</p>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+}
+    
+    listarPersonagens();
+
+</script>

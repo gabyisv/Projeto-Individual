@@ -26,7 +26,7 @@ body {
 }
 
 .titulo-sobre  h2{
-    font-size: 50px;
+    font-size: 55px;
     align-items: center;
     display: flex;
     text-align: center;
@@ -54,240 +54,157 @@ body {
 }
 
 
-
 .container-sobre {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 50px;
 }
 
-.foto-section {
-    display: flex;
+
+.container-sobre p {
+    font-family: "Montagu Slab", serif;
+    font-size: 24px;
+}
+
+#btnIniciarQuiz {
+    background-color: #DBAF4F;
+    padding: 20px;
+    border: none;
+    border-radius: 15px;
+    box-shadow: rgba(255, 255, 255, 0.588) 0px 1px 2px 0px, rgba(255, 255, 255, 0.374) 0px 2px 6px 2px;
+    width: 30%;
+    color: #1E0E1F;
+    font-family: "Montagu Slab", serif;
+font-weight: 600;
+font-size: 20px;
+    justify-content: center;
     align-items: center;
-    justify-content: center;
-    margin: 400px auto;
-}
-
-.alinhar-foto {
+    margin:  auto;
     display: flex;
-    justify-content: center;
-    margin: auto;
-    width: 60%;
-    position: absolute;
 }
 
-.alinhar-foto img {
-    width: 94%;
-    height: 550px;
+#btnIniciarQuiz:hover {
+    background-color: #9b6f10;
+    color: #fff;
+    transition: 0.3s;
+    cursor: pointer;
 }
 
-.posicao-borda {
-    display: flex;
-    position: absolute;
-    bottom: 0;
-    height: 600px;
-    width: 100%;
-    top: 0;
+.texto-explicacao {
+    text-align: center;
+    margin: 40px 150px;
+    font-weight: 400;
+    font-size: 20px;
 }
 
-.posicao-borda img {
-    width: 100%;
-    height: 580px;
-}
-
-.titulo-sobre-resumo {
+#pontuacaoEJogo {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.titulo-sobre-resumo h2 {
-    font-family: "MonteCarlo", cursive;
-    font-size: 65px;
-}
-
-.titulo-sobre-resumo p {
-    font-family: "Montagu Slab", serif;
+    background-color: #3E2540 ;
     width: 70%;
-    text-align: center;
-    font-size: 24px;
-    gap: 0;
-    margin: 0;
-    font-weight: 300;
-}
-
-.resumo-linhagem {
-    display: flex;
-}
-
-.posicao-borda-resumo {
-    position: absolute;
-}
-
-.posicao-borda-resumo img {
-    width:600px;
-}
-
-.alinhar-foto-resumo {
-    display: flex;
+    height: 320%;
+    margin: auto;
+    border-radius: 15px;
     position: relative;
+
 }
 
-.alinhar-foto-resumo img {
+#jogo {
+    display: flex;
+    flex-direction: column;
+}
+
+.teste {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    align-self: center;
+    margin-right: 20px;
+}
+
+.teste img {
+    width: 500px;
+    
+}
+
+.flex-colunar {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    padding: 8px;
+}
+
+.width-fit-content {
+    width: fit-content;
+}
+
+
+.padding-8 {
+    padding: 8px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-success-with-bg {
+    color: #095c36;
+    background-color: #9dd3ba;
+    width:700px;
+    border-radius: 15px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.text-warning-with-bg {
+    color: #705400;
+    background-color:#fdebb3;
+}
+
+.text-danger-with-bg {
+    color: #990c19;
+    background-color: #f0c1c6;
+}
+
+.text-new-gray {
+    color: #CCCCCC;
+}
+
+.flex-colunar {
+    color: #fff;
+}
+
+#perguntaDaQuestaoAtual {
+    background-color: #1c091f;
+    padding: 20px;
+    border-radius: 0 0 15px 15px;
     width: 700px;
 }
 
-.section-resumo-linhagem {
-    margin: 150px;
+#infoQuestao {
+    font-weight: 600;
+    background-color: #0C030D;
+    padding: 20px;
+    border-radius: 15px 15px 0 0;
 }
 
-.section-resumo-linhagem h2 {
-    font-family: "MonteCarlo", cursive;
-    font-size: 60px;
-    text-align: center;
-}
-
-.resumo-linhagem p {
-    text-align: center;
-    margin-right: 50px;
-    align-items: center;
+#botoes {
+    gap: 20px;
+    width: 50%;
     justify-content: center;
-    font-size: 22px;
-    font-weight: 400;
+    margin: auto;
 }
 
-.section-habilidades {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.container-titulo-habilidades {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.container-titulo-habilidades h2 {
-    font-family: "MonteCarlo", cursive;
-    font-size: 60px;
-}
-
-.container-titulo-habilidades p {
-    margin: 0;
-    font-weight: 400;
-    font-size: 22px;
-}
-
-.resumo-hamon {
-    display: flex;
-    flex-direction: row-reverse;
-    gap: 30px;
-    justify-content: center;
-    margin: 90px;
-    align-items: center;
-}
-
-.resumo-hamon p {
-    font-size: 22px;
-}
-
-
-.container-titulo-jornada {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.container-titulo-jornada h2 {
-    font-family: "MonteCarlo", cursive;
-    font-size: 60px;
-}
-
-.container-titulo-jornada p {
-    margin: 0;
-    font-weight: 400;
-    font-size: 22px;
-    text-align: center;
-    margin: 0 60px;
-}
-
-.cards {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.container-card {
-    display: flex;
-    gap: 30px;
-    margin-top: 30px;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-
-.card img {
-    width: 500px;
-}
-
-.seta {
-    width: 7px;
-}
-
-.setas-container {
-    margin: 0;
-    display: flex;
-    gap: 0;
-}
-.container-card-2  {
-    display: flex;
-    gap: 30px;
-}
-
-.container-card-2 .card {
-    margin-top: 30px;
-}
-
-.section-rodape {
-    display: flex;
-    flex-direction: column;
-    margin:  auto;
-    justify-content: center;
-    align-items: center;
-    background-color: #0B060C;
-    margin-top: 50px;
-}
-
-.container-titulos {
-    display: flex;
-    gap:  20px;
-    padding: 30px;
-}
-
-.container-titulos a{
-    color: #ffff;
+#botoes button {
+    padding: 12px;
+    border: none;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 18px;
+  
+    box-shadow: rgba(255, 255, 255, 0.588) 0px 1px 2px 0px, rgba(255, 255, 255, 0.374) 0px 2px 6px 2px;
     font-family: "Montagu Slab", serif;
-    text-decoration: none;
 }
 
-.container-logo-rodape {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
-}
-
-
-label {
-    color: #fff;
-}
