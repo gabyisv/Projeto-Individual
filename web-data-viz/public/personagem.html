@@ -39,6 +39,15 @@
     </div>
   </nav>
 
+  <div>
+    <div>
+            <div class="container-favoritos" style="display: block;" id="container-favoritos">
+                <h1> Veja os favoritos do Fandom! </h1>
+
+            </div>
+    </div>
+  </div>
+
   <select name="" id="select_tipoMostra" onclick="mostrarCards()">
     <option value="#" disabled selected>Selecione</option>
     <option value="personagem">Personagem</option>
@@ -60,7 +69,6 @@
 
   <div id="cardsPersonagens" style="display: none"></div>
 
-
 </body>
 
 </html>
@@ -81,10 +89,11 @@
 
 
     function mostrarCards() {
+
       var tipo_mostrar = select_tipoMostra.value;
-
+      
       container.innerHTML = "";
-
+      
       if (tipo_mostrar == "personagem") {
         cardsPersonagens.style.display = "flex";
         listaPersonagens.forEach(p => {

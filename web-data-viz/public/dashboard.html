@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="css/dashboards.css">
+    <link rel="stylesheet" href="css/fonts/fonte.css">
+    <title>Exemplo de como Plotar Gráficos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body> 
+
+    <nav id="menu-nav" class="menu-nav">
+        <div class="logo-nav-lateral">
+            <div class="icon-nav">
+                <img src="./assets/image 18.png" alt="">
+                <h2>Olá, Gabrielly </h2>
+
+                <ul>
+                    <li>
+                        <a href="#">Centro de Dados</a>
+                    </li>
+                    <li>
+                        <a href="quiz.html">Questionário</a>
+                    </li>
+                    <li>
+                        <a href="personagem.html">Elenco Estelar</a>
+                    </li>
+                    <li>
+                        <a href="perfil.html">Perfil</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sair-nav">
+            <p>Sair</p>
+        </div>
+    </nav>
+
+    <div id="mostrarGrafico" style="display:block">
+        <section>
+            <div class="container-favoritos">
+                <h1> Veja os favoritos do Fandom! </h1>
+
+            </div>
+        </section>
+        <section>
+            <div class="container-kpi">
+                <div class="quantidade-voto">
+                    <h2> Quantidade de votos:</h2>
+                    <span id="kpiTotal"></span>
+                </div>
+
+                <div class="personagem-favorito">
+                    <h2>Personagem Favorito:</h2>
+                    <span id="kpiPersonagem"></span>
+                </div>
+
+                <div class="temporada-favorita">
+                    <h2>Parte Favorita:</h2>
+                    <span id="kpiParte"></span>
+                </div>
+            </div>
+
+            <div class="container-botao-votar">
+                <h2>Vote no seu favorito</h2>
+                <button onclick="votacao()"> Votar </button>
+            </div>
+        </section>
+        <div class="container-grafico">
+            <div class="linha">
+                <h2>Personagens Favoritos</h2>
+                <canvas id="linha"></canvas>
+            </div>
+            <div class="barra">
+                <h2>Partes Favoritas</h2>
+                <canvas id="barra"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="votacao" id="mostrarVotacao" style="display: none;">
+        <h2> VOTAÇÃO </h2>
+        <h3>Personagem</h3>
+        <select id="selectPersonagem"></select>
+
+        <h3>Parte</h3>
+        <select id="selectParte"></select>
+
+
+        <button onclick="registrarVoto()">Registrar voto</button>
+
+    </div>
+
+</body>
+
+</html>
+
+
+<script>
+
+var kpiTotal = document.getElementById("kpiTotal");
+var kpiPersonagem = document.getElementById("kpiPersonagem");
+var kpiParte = document.getElementById("kpiParte");
+
+// armazena os dados da votação
+  var dadosPersonagem = [
+  { idpersonagem: 1, nome: "Jotaro Kujo", votos: 10 },
+  { idpersonagem: 2, nome: "Joseph Joestar", votos: 10 },
+  { idpersonagem: 3, nome: "Josuke Higashikata", votos: 10 },
+  { idpersonagem: 4, nome: "Giorno Giovanna", votos: 10 },
+  { idpersonagem: 5, nome: "Jolyne Cujoh", votos: 10 }
+  ];
+
+  var dadosParte = [
+    { idtemporada: 1, parte: "Parte 1", votos: 10 },
+    { idtemporada: 2, parte: "Parte 2", votos: 23 },
+    { idtemporada: 3, parte: "Parte 3", votos: 10 },
+    { idtemporada: 4, parte: "Parte 4", votos: 10 },
+    { idtemporada: 5, parte: "Parte 5", votos: 10 },
+    { idtemporada: 6, parte: "Parte 6", votos: 10 },
+    { idtemporada: 7, parte: "Parte 7", votos: 10 },
+    { idtemporada: 8, parte: "Parte 8", votos: 10 },
+    { idtemporada: 9, parte: "Parte 9", votos: 10 }
+  ];
+
+  // armazena instancias dos objetos chartjs
+  var grafPersonagem;
+  var grafPartes;
+
+
+  function inicializarGraficos() {
+    // arrays pra preencher com os nomes dos personagens e quantidade de votos
+    var labelsPersonagem = [];
+    var votosPersonagem = [];
+
+    for (var i = 0; i < dadosPersonagem.length; i++) {
+      labelsPersonagem.push(dadosPersonagem[i].nome);
+      votosPersonagem.push(dadosPersonagem[i].votos);
+    }
+
+    grafPersonagem = new Chart(document.getElementById("linha").getContext("2d"), {
+      type: 'bar',
+      data: {
+        labels: labelsPersonagem,
+        datasets: [{
+          label: 'Votos',
+          data: votosPersonagem,
+          backgroundColor: '#DBAF4F',
+          borderColor: '#DBAF4F',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: { legend: { labels: { color: '#fff' } } },
+        scales: {
+          x: { ticks: { color: '#fff' } },
+          y: { ticks: { color: '#fff' } }
+        }
+      }
+    });
+
+
+    var labelsPartes = [];
+    var votosPartes = [];
+    
+    for (var i = 0; i < dadosParte.length; i++) {
+      labelsPartes.push(dadosParte[i].parte);
+      votosPartes.push(dadosParte[i].votos);
+    }
+
+    grafPartes = new Chart(document.getElementById("barra").getContext("2d"), {
+      type: 'bar',
+      data: {
+        labels: labelsPartes,
+        datasets: [{
+          label: 'Votos',
+          data: votosPartes,
+          backgroundColor: '#DBAF4F',
+          borderColor: '#DBAF4F',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        plugins: {
+            legend: {
+                labels: {
+                    color: '#fff'
+                }
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: '#fff'
+                }
+            },
+            y: {
+                ticks: {
+                    color: '#fff'
+                }
+            }
+        }
+    }
+    });
+
+    atualizarKPI();
+  }
+
+  // Mostrar tela de votação
+  function votacao() {
+    
+    mostrarGrafico.style.display = "none";
+    mostrarVotacao.style.display = "block";
+
+    var selectPersonagem = document.getElementById("selectPersonagem");
+    var selectParte = document.getElementById("selectParte");
+
+    selectPersonagem.innerHTML = "";
+    selectParte.innerHTML = "";
+
+    //percorre pelos dados dos personagens e partes e coloca nos options do select
+      for (var i = 0; i < dadosPersonagem.length; i++) {
+      selectPersonagem.innerHTML += `<option value="${dadosPersonagem[i].idpersonagem}">
+        ${dadosPersonagem[i].nome}
+        </option>
+        `
+    }
+
+    for (var i = 0; i < dadosParte.length; i++) {
+      selectParte.innerHTML += `<option value="${dadosParte[i].idtemporada}">
+        ${dadosParte[i].parte}
+        </option>
+      `
+    }
+  }
+
+
+
+  function registrarVoto() {
+    var fkusuario = sessionStorage.ID_USUARIO;
+    var fkpersonagem = document.getElementById("selectPersonagem").value;
+    var fktemporada = document.getElementById("selectParte").value;
+
+    console.log("fkusuario:", fkusuario);
+    console.log("fkpersonagem:", fkpersonagem);
+    console.log("fktemporada:", fktemporada);
+    // se encontrar o item correspondente ao voto ele incrementa
+    for (var i = 0; i < dadosPersonagem.length; i++) {
+      if (dadosPersonagem[i].idpersonagem == fkpersonagem) {
+        dadosPersonagem[i].votos++;
+      }
+    }
+
+    for (var i = 0; i < dadosParte.length; i++) {
+      if (dadosParte[i].idtemporada == fktemporada) {
+        dadosParte[i].votos++;
+      }
+    }
+
+    //refaz a separação dos dados atualizados
+    var labelsPersonagem = [];
+    var votosPersonagem = [];
+
+    for (var i = 0; i < dadosPersonagem.length; i++) {
+      labelsPersonagem.push(dadosPersonagem[i].nome);
+      votosPersonagem.push(dadosPersonagem[i].votos);
+    }
+
+    var labelsPartes = [];
+    var votosPartes = [];
+    
+    for (var i = 0; i < dadosParte.length; i++) {
+      labelsPartes.push(dadosParte[i].fktemporada);
+      votosPartes.push(dadosParte[i].votos);
+    }
+
+    atualizarGraficoFavoritos(grafPersonagem, labelsPersonagem, votosPersonagem);
+    atualizarGraficoFavoritos(grafPartes, labelsPartes, votosPartes);
+
+    atualizarKPI();
+    
+    mostrarVotacao.style.display = "none";
+    mostrarGrafico.style.display = "block";
+
+    var fkusuario = sessionStorage.ID_USUARIO;
+
+  registrarVotacao(fkusuario, fkpersonagem, fktemporada);
+
+//  var fkusuario = sessionStorage.ID_USUARIO;
+//      var fkpersonagem = document.getElementById("selectPersonagem").value;
+//     var fkparte = document.getElementById("selectParte").value;
+
+
+//     console.log("fkusuario:", fkusuario);
+//     console.log("personagem:", fkpersonagem);
+//     console.log("parte:", fkparte);
+
+//     // Atualiza votos localmente
+//     for (var i = 0; i < dadosPersonagem.length; i++) {
+//       if (dadosPersonagem[i].nome == fkpersonagem) {
+//         dadosPersonagem[i].votos++;
+//       }
+//     }
+
+//     for (var i = 0; i < dadosParte.length; i++) {
+//       if (dadosParte[i].parte == fkparte) {
+//         dadosParte[i].votos++;
+//       }
+//     }
+
+//     // Atualiza gráficos
+//     var labelsPersonagem = dadosPersonagem.map(p => p.nome);
+//     var votosPersonagem = dadosPersonagem.map(p => p.votos);
+
+//     var labelsPartes = dadosParte.map(p => p.parte);
+//     var votosPartes = dadosParte.map(p => p.votos);
+
+//     atualizarGraficoFavoritos(grafPersonagem, labelsPersonagem, votosPersonagem);
+//     atualizarGraficoFavoritos(grafPartes, labelsPartes, votosPartes);
+//     atualizarKPI();
+
+//     mostrarVotacao.style.display = "none";
+//     mostrarGrafico.style.display = "block";
+
+//     // Envia para o backend
+//     registrarVotacao(fkusuario, fkpersonagem, fkparte);
+    
+  }
+
+  function atualizarGraficoFavoritos(myChart, labelsNovos, dadosNovos) {
+    myChart.data.labels = labelsNovos;
+    myChart.data.datasets[0].data = dadosNovos;
+    myChart.update();
+  }
+
+  function atualizarKPI() {
+    var total = 0;
+    // soma todos os votos
+    for (var i = 0; i < dadosPersonagem.length; i++) {
+      total += dadosPersonagem[i].votos;
+    }
+    kpiTotal.innerHTML = total;
+
+    //percorre pra encontrar o item com o maior numero de votos
+    var maiorVoto = -1;
+    var favorito = "";
+    for (var i = 0; i < dadosPersonagem.length; i++) {
+      if (dadosPersonagem[i].votos > maiorVoto) {
+        maiorVoto = dadosPersonagem[i].votos;
+        favorito = dadosPersonagem[i].nome;
+      }
+    }
+
+    kpiPersonagem.innerHTML = favorito;
+
+    // Parte favorita
+    maiorVoto = -1;
+    favorito = "";
+    for (var i = 0; i < dadosParte.length; i++) {
+      if (dadosParte[i].votos > maiorVoto) {
+        maiorVoto = dadosParte[i].votos;
+        favorito = dadosParte[i].parte;
+      }
+    }
+    kpiParte.innerHTML = favorito;
+  }
+
+inicializarGraficos();
+
+ function registrarVotacao(fkusuario, fkpersonagem, fktemporada) {
+        fetch("/selecao/selecionar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                fkusuario,
+                fkpersonagem,
+                fktemporada
+            })
+        })
+        .then(resposta => {
+            if (resposta.ok) {
+                console.log("Votação registrado com sucesso");
+            } else {
+                console.log("Falha ao registrar a votação");
+                alert("Ops! Não conseguimos registrar sua votação. Tente novamente.")
+            }
+        })
+        .catch(erro => {
+            console.error("Erro na comunicação com a API", erro)
+        });
+    }
+
+</script>
+ 

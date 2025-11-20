@@ -208,3 +208,15 @@ font-size: 20px;
     font-family: "Montagu Slab", serif;
 }
 
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-link  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-direction: row
+}

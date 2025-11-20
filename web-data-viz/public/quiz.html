@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exemplo - Quiz</title>
     <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="./css/nav.css">
     <link rel="stylesheet" href="css/fonts/fonte.css">
 </head>
 
@@ -14,18 +15,35 @@
 
     <header>
         <img src="./assets/image-Photoroom (6) 1.png" alt="" class="logo">
+        <ul class="header-link">
+          <li>
+            <a href="dashboard.html">Centro de Dados</a>
+          </li>
+          <li>
+            <a href="quiz.html">Questionário</a>
+          </li>
+          <li>
+            <a href="personagem.html">Elenco Estelar</a>
+          </li>
+          <li>
+            <a href="perfil.html">Perfil</a>
+          </li>
+        </ul>
     </header>
 
     <section class="section-sobre">
         <div class="container-sobre">
             <div class="titulo-sobre">
                 <img src="./assets/image (18) 3.png" alt="">
-                <h2> Sobre o Anime </h2>
+                <h2> Questionário </h2>
                 <img src="./assets/image (18) 3.png" alt="">
             </div>
                 <p>Será que você realmente sabe sobre Jojo?</p>
         </div>
+
+        <div class="teste2"> aaa </div>
     </section>
+
 
     
     <p class="texto-explicacao">Este quiz foi criado para testar seus conhecimentos sobre a lore e os detalhes mais bizarros de JoJo's Bizarre Adventure. <br>
@@ -353,5 +371,39 @@
         // btnConcluir.disabled = true
         btnTentarNovamente.disabled = false
 
+        var idquiz = 1;
+        var id_usuario = sessionStorage.ID_USUARIO;
+
+        if (id_usuario) {
+            registrarResultado(id_usuario, idquiz, pontuacaoFinal);
+        } else {
+            console.error("id do usuario nao encontrado.")
+        }
+    }
+
+
+    function registrarResultado(idusuario, idquiz, pontuacaoFinal) {
+        fetch("/quiz/finalizar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idusuario: idusuario,
+                idquiz: idquiz,
+                pontuacao: pontuacaoFinal
+            })
+        })
+        .then(resposta => {
+            if (resposta.ok) {
+                console.log("Resultado do quiz registrado com sucesso");
+            } else {
+                console.log("Falha ao registrar o resultado do quiz.");
+                alert("Ops! Não conseguimos registrar sua pontuação. Tente novamente.")
+            }
+        })
+        .catch(erro => {
+            console.error("Erro na comunicação com a API", erro)
+        });
     }
 </script>
