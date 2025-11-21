@@ -15,11 +15,11 @@
         <div class="logo-nav-lateral">
             <div class="icon-nav">
                 <img src="./assets/image 18.png" alt="">
-                <h2>Olá, Gabrielly </h2>
+                <h2>Olá, <span id="nome"></span> </h2>
 
                 <ul>
                     <li>
-                        <a href="#">Centro de Dados</a>
+                        <a href="dashboard.html">Centro de Dados</a>
                     </li>
                     <li>
                         <a href="quiz.html">Questionário</a>
@@ -28,7 +28,7 @@
                         <a href="personagem.html">Elenco Estelar</a>
                     </li>
                     <li>
-                        <a href="#">Perfil</a>
+                        <a href="perfil.html">Perfil</a>
                     </li>
                 </ul>
             </div>
@@ -50,19 +50,15 @@
             <div class="alteracao-informacao">
                 <div class="campo-alterar">
                     <p class="titulo-alterar"> Nome de Usuário: </p>
-                    <p> Gabrielly </p>
+                    <input type="text" id="input_nome" placeholder="Seu nome">
                 </div>
 
-                <div class="campo-alterar">
-                    <p class="titulo-alterar"> E-mail: </p>
-                    <p> gabrielly@gmail.com </p>
-                </div>
+                
 
-                <div class="container-botao-alinhar">
-                    <div class="campo-alterar">
-                        <p class="titulo-alterar"> Data de Nascimento </p>
-                        <p> 22/12/2006 </p>
-                    </div>
+                <div class="container-botao-alinhar"><div class="campo-alterar">
+                    <p class="titulo-alterar"> E-mail:> </p>
+                    <input type="email" id="input_email" placeholder="Seu E-mail">
+                </div>
                     <button onclick="salvar()">Salvar Informações</button>
                 </div>
             </div>
@@ -77,15 +73,17 @@
                 <div class="alteracao-informacao">
                     <div class="campo-alterar">
                         <p class="titulo-alterar"> Alterar Senha </p>
+                        <input type="password" name="" id="input_senha" placeholder="Sua senha">
                     </div>
 
                     <div class="campo-alterar">
                         <p class="titulo-alterar"> Confirmar Senha </p>
+                        <input type="password" name="" id="input_confirmarSenha" placeholder="Confirme sua senha">
                     </div>
+                    <button onclick="salvar()" class="botao-seguranca">Salvar Alterações</button>
                     
                     
                 </div>
-                <button onclick="salvar()" class="botao-seguranca">Salvar Alterações</button>
             </div>
 
             <div class="info-01 personalizar">
@@ -122,3 +120,50 @@
 </body>
 
 </html>
+
+<script>
+    window.onload = () => {
+        var usuarioID = sessionStorage.ID_USUARIO;
+        fetch(`/perfil/exibir?id=${usuarioID}`)
+            .then(res => res.json())
+            .then(usuarioArray => {
+
+                var usuario = usuarioArray[0]
+                document.getElementById("nome").textContent = usuario.nome;
+                document.getElementById("input_nome").textContent = usuario.nome;
+                document.getElementById("input_email").textContent = usuario.email;
+            })
+            .catch(err => console.error("Erro ao carregar perfil: ", err));
+    }
+
+    function salvar() {
+        var usuarioID = sessionStorage.ID_USUARIO;
+        var nome = input_nome.value;
+        var email = input_email.value;
+        var senha = input_senha.value;
+        var confirmarSenha = input_confirmarSenha.value;
+
+        if (senha != confirmarSenha) {
+            alert("As senhas precisam ser iguais.")
+            return;
+        }
+
+        fetch("/perfil/atualizar", {
+            method:"PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify ({
+                id:usuarioID,
+                nome: nome,
+                email: email,
+                senha: senha
+            })
+        })
+        .then(res => res.json())
+        .then(resp => {
+            alert("Informações atualizadas com sucesso!");
+        }) 
+        .catch(err => console.error("Erro ao atualizar perfil: ", err));
+    }
+</script>

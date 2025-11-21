@@ -15,11 +15,11 @@
     <div class="logo-nav-lateral">
       <div class="icon-nav">
         <img src="./assets/image 18.png" alt="">
-        <h2>Olá, Gabrielly </h2>
+        <h2>Olá, <span id="nome"></span> </h2>
 
         <ul>
           <li>
-            <a href="#">Centro de Dados</a>
+             <a href="dashboard.html">Centro de Dados</a>
           </li>
           <li>
             <a href="quiz.html">Questionário</a>
@@ -157,5 +157,20 @@
 }
     
     listarPersonagens();
+
+      window.onload = () => {
+        var usuarioID = sessionStorage.ID_USUARIO;
+        fetch(`/perfil/exibir?id=${usuarioID}`)
+            .then(res => res.json())
+            .then(usuarioArray => {
+
+                var usuario = usuarioArray[0]
+                document.getElementById("nome").textContent = usuario.nome;
+                document.getElementById("input_nome").textContent = usuario.nome;
+                document.getElementById("input_email").textContent = usuario.email;
+            })
+            .catch(err => console.error("Erro ao carregar perfil: ", err));
+    }
+
 
 </script>

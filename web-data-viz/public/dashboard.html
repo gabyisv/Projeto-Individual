@@ -17,7 +17,7 @@
         <div class="logo-nav-lateral">
             <div class="icon-nav">
                 <img src="./assets/image 18.png" alt="">
-                <h2>Olá, Gabrielly </h2>
+                <h2>Olá, <span id="nome"></span> </h2>
 
                 <ul>
                     <li>
@@ -211,7 +211,7 @@ var kpiParte = document.getElementById("kpiParte");
     atualizarKPI();
   }
 
-  // Mostrar tela de votação
+
   function votacao() {
     
     mostrarGrafico.style.display = "none";
@@ -249,6 +249,7 @@ var kpiParte = document.getElementById("kpiParte");
     console.log("fkusuario:", fkusuario);
     console.log("fkpersonagem:", fkpersonagem);
     console.log("fktemporada:", fktemporada);
+
     // se encontrar o item correspondente ao voto ele incrementa
     for (var i = 0; i < dadosPersonagem.length; i++) {
       if (dadosPersonagem[i].idpersonagem == fkpersonagem) {
@@ -379,9 +380,9 @@ inicializarGraficos();
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                fkusuario,
-                fkpersonagem,
-                fktemporada
+                fkusuario: fkusuario,
+                fkpersonagem: fkpersonagem,
+                fktemporada: fktemporada
             })
         })
         .then(resposta => {
@@ -389,12 +390,26 @@ inicializarGraficos();
                 console.log("Votação registrado com sucesso");
             } else {
                 console.log("Falha ao registrar a votação");
-                alert("Ops! Não conseguimos registrar sua votação. Tente novamente.")
+                alert("Ops, não conseguimos registrar sua votação. Tente novamente.")
             }
         })
         .catch(erro => {
             console.error("Erro na comunicação com a API", erro)
         });
+    }
+
+  window.onload = () => {
+        var usuarioID = sessionStorage.ID_USUARIO;
+        fetch(`/perfil/exibir?id=${usuarioID}`)
+            .then(res => res.json())
+            .then(usuarioArray => {
+
+                var usuario = usuarioArray[0]
+                document.getElementById("nome").textContent = usuario.nome;
+                document.getElementById("input_nome").textContent = usuario.nome;
+                document.getElementById("input_email").textContent = usuario.email;
+            })
+            .catch(err => console.error("Erro ao carregar perfil: ", err));
     }
 
 </script>

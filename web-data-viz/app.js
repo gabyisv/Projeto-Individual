@@ -20,7 +20,7 @@ var usuarioRouter = require("./src/routes/usuarios");
 var personagemRouter = require("./src/routes/personagem");
 var quizRouter = require("./src/routes/quiz");
 var selecaoRouter = require("./src/routes/selecao");
-
+var perfilRouter = require("./src/routes/perfil");
 
 
 app.use(express.json());
@@ -34,6 +34,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/personagem", personagemRouter);
 app.use("/quiz", quizRouter);
 app.use("/selecao", selecaoRouter);
+app.use("/perfil", perfilRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
