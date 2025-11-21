@@ -45,7 +45,6 @@
         <section>
             <div class="container-favoritos">
                 <h1> Veja os favoritos do Fandom! </h1>
-
             </div>
         </section>
         <section>
@@ -84,15 +83,26 @@
     </div>
 
     <div class="votacao" id="mostrarVotacao" style="display: none;">
-        <h2> VOTAÇÃO </h2>
-        <h3>Personagem</h3>
-        <select id="selectPersonagem"></select>
+         <section>
+            <div class="container-favoritos">
+                <h1> Vote no seu favorito! </h1>
+            </div>
+        </section>
 
-        <h3>Parte</h3>
-        <select id="selectParte"></select>
+        <section class="container-votacao">
+          <div class="campo-votacao">
+            <h3>Personagem</h3>
+            <select id="selectPersonagem"></select>
+          </div>
+          
+          <div class="campo-votacao">
+          <h3>Parte</h3>
+          <select id="selectParte"></select>
+          <button onclick="registrarVoto()">Registrar voto</button>
+          </div>
+        </section>
 
 
-        <button onclick="registrarVoto()">Registrar voto</button>
 
     </div>
 
@@ -109,23 +119,23 @@ var kpiParte = document.getElementById("kpiParte");
 
 // armazena os dados da votação
   var dadosPersonagem = [
-  { idpersonagem: 1, nome: "Jotaro Kujo", votos: 10 },
-  { idpersonagem: 2, nome: "Joseph Joestar", votos: 10 },
-  { idpersonagem: 3, nome: "Josuke Higashikata", votos: 10 },
-  { idpersonagem: 4, nome: "Giorno Giovanna", votos: 10 },
-  { idpersonagem: 5, nome: "Jolyne Cujoh", votos: 10 }
+  { idpersonagem: 1, nome: "Jotaro Kujo", votos: 5 },
+  { idpersonagem: 2, nome: "Joseph Joestar", votos: 8 },
+  { idpersonagem: 3, nome: "Josuke Higashikata", votos: 3 },
+  { idpersonagem: 4, nome: "Giorno Giovanna", votos: 2 },
+  { idpersonagem: 5, nome: "Jolyne Cujoh", votos: 2 }
   ];
 
   var dadosParte = [
-    { idtemporada: 1, parte: "Parte 1", votos: 10 },
-    { idtemporada: 2, parte: "Parte 2", votos: 23 },
+    { idtemporada: 1, parte: "Parte 1", votos: 8 },
+    { idtemporada: 2, parte: "Parte 2", votos: 9 },
     { idtemporada: 3, parte: "Parte 3", votos: 10 },
-    { idtemporada: 4, parte: "Parte 4", votos: 10 },
-    { idtemporada: 5, parte: "Parte 5", votos: 10 },
-    { idtemporada: 6, parte: "Parte 6", votos: 10 },
-    { idtemporada: 7, parte: "Parte 7", votos: 10 },
-    { idtemporada: 8, parte: "Parte 8", votos: 10 },
-    { idtemporada: 9, parte: "Parte 9", votos: 10 }
+    { idtemporada: 4, parte: "Parte 4", votos: 9 },
+    { idtemporada: 5, parte: "Parte 5", votos: 8 },
+    { idtemporada: 6, parte: "Parte 6", votos: 7 },
+    { idtemporada: 7, parte: "Parte 7", votos: 5 },
+    { idtemporada: 8, parte: "Parte 8", votos: 4 },
+    { idtemporada: 9, parte: "Parte 9", votos: 4 }
   ];
 
   // armazena instancias dos objetos chartjs

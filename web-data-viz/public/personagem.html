@@ -42,20 +42,26 @@
   <div>
     <div>
             <div class="container-favoritos" style="display: block;" id="container-favoritos">
-                <h1> Veja os favoritos do Fandom! </h1>
+                <h1> Elenco Joestar! </h1>
 
             </div>
     </div>
   </div>
 
-  <select name="" id="select_tipoMostra" onclick="mostrarCards()">
-    <option value="#" disabled selected>Selecione</option>
-    <option value="personagem">Personagem</option>
-    <option value="stand">Stand</option>
-  </select>
+  <div class="container-votacao">
 
-  <select name="" id="select_temporadaMostrar" onclick="filtrarPersonagem()">
-    <option value="#" disabled selected>Selecione</option>
+    <div class="campo-votacao">
+      <select name="" id="select_tipoMostra" onclick="mostrarCards()">
+        <option value="#" disabled selected>Selecione</option>
+        <option value="personagem">Personagem</option>
+        <option value="stand">Stand</option>
+      </select>
+    </div>
+
+    <div class="campo-votacao">
+
+      <select name="" id="select_temporadaMostrar" onclick="filtrarPersonagem()">
+        <option value="#" disabled selected>Selecione</option>
     <option value="1">Parte 1</option>
     <option value="2">Parte 2</option>
     <option value="3">Parte 3</option>
@@ -66,6 +72,8 @@
     <option value="8">Parte 8</option>
     <option value="9">Parte 9</option>
   </select>
+</div>
+</div>
 
   <div id="cardsPersonagens" style="display: none"></div>
 
