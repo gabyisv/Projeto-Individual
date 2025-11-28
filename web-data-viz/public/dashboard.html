@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="./css/nav.css">
     <link rel="stylesheet" href="css/dashboards.css">
     <link rel="stylesheet" href="css/fonts/fonte.css">
-    <title>Exemplo de como Plotar Gráficos</title>
+     <link rel="icon" href="./assets/image-Photoroom (6) 1.png">
+    <title>Dashboard | Jojoby</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -101,9 +102,6 @@
           <button onclick="registrarVoto()">Registrar voto</button>
           </div>
         </section>
-
-
-
     </div>
 
 </body>
@@ -112,315 +110,320 @@
 
 
 <script>
+var dadosPersonagem = [
+  { idpersonagem: 1, nome: "Jotaro", votos: 0 },
+  { idpersonagem: 2, nome: "Joseph", votos: 0 },
+  { idpersonagem: 3, nome: "Dio", votos: 0 }
+];
 
-var kpiTotal = document.getElementById("kpiTotal");
-var kpiPersonagem = document.getElementById("kpiPersonagem");
-var kpiParte = document.getElementById("kpiParte");
-
-// armazena os dados da votação
-  var dadosPersonagem = [
-  { idpersonagem: 1, nome: "Jotaro Kujo", votos: 5 },
-  { idpersonagem: 2, nome: "Joseph Joestar", votos: 8 },
-  { idpersonagem: 3, nome: "Josuke Higashikata", votos: 3 },
-  { idpersonagem: 4, nome: "Giorno Giovanna", votos: 2 },
-  { idpersonagem: 5, nome: "Jolyne Cujoh", votos: 2 }
-  ];
-
-  var dadosParte = [
-    { idtemporada: 1, parte: "Parte 1", votos: 8 },
-    { idtemporada: 2, parte: "Parte 2", votos: 9 },
-    { idtemporada: 3, parte: "Parte 3", votos: 10 },
-    { idtemporada: 4, parte: "Parte 4", votos: 9 },
-    { idtemporada: 5, parte: "Parte 5", votos: 8 },
-    { idtemporada: 6, parte: "Parte 6", votos: 7 },
-    { idtemporada: 7, parte: "Parte 7", votos: 5 },
-    { idtemporada: 8, parte: "Parte 8", votos: 4 },
-    { idtemporada: 9, parte: "Parte 9", votos: 4 }
-  ];
-
-  // armazena instancias dos objetos chartjs
-  var grafPersonagem;
-  var grafPartes;
+var dadosPersonagemLocal = JSON.parse(JSON.stringify(dadosPersonagem));
 
 
-  function inicializarGraficos() {
-    // arrays pra preencher com os nomes dos personagens e quantidade de votos
-    var labelsPersonagem = [];
-    var votosPersonagem = [];
+var dadosParte = [
+  { idtemporada: 1, parte: "Parte 1", votos: 0 },
+  { idtemporada: 2, parte: "Parte 2", votos: 0 },
+  { idtemporada: 3, parte: "Parte 3", votos: 0 }
+];
 
-    for (var i = 0; i < dadosPersonagem.length; i++) {
-      labelsPersonagem.push(dadosPersonagem[i].nome);
-      votosPersonagem.push(dadosPersonagem[i].votos);
-    }
+const nomesDasPartes = {
+  1: "Parte 1",
+  2: "Parte 2",
+  3: "Parte 3",
+  4: "Parte 4",
+  5: "Parte 5",
+  6: "Parte 6"
+};
 
-    grafPersonagem = new Chart(document.getElementById("linha").getContext("2d"), {
-      type: 'bar',
-      data: {
-        labels: labelsPersonagem,
-        datasets: [{
-          label: 'Votos',
-          data: votosPersonagem,
-          backgroundColor: '#DBAF4F',
-          borderColor: '#DBAF4F',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        plugins: { legend: { labels: { color: '#fff' } } },
-        scales: {
-          x: { ticks: { color: '#fff' } },
-          y: { ticks: { color: '#fff' } }
-        }
+var grafPersonagem;
+var grafPartes;
+
+var selectPersonagem = document.getElementById("selectPersonagem");
+var selectParte = document.getElementById("selectParte");
+
+// preencher selectPersonagem
+for (var i = 0; i < dadosPersonagem.length; i++) {
+  var option = document.createElement("option");
+  option.value = dadosPersonagem[i].idpersonagem;
+  option.textContent = dadosPersonagem[i].nome;
+  selectPersonagem.appendChild(option);
+}
+
+// preencher selectParte
+for (var i = 0; i < dadosParte.length; i++) {
+  var option = document.createElement("option");
+  option.value = dadosParte[i].idtemporada;
+  option.textContent = dadosParte[i].parte;
+  selectParte.appendChild(option);
+}
+
+
+
+function votacao() {
+  document.getElementById("mostrarGrafico").style.display = "none";
+  document.getElementById("mostrarVotacao").style.display = "block";
+}
+
+
+// CARREGAR VOTOS PERSONAGEM
+
+function carregarVotos_personagem() {
+
+    fetch("/selecao/votos-personagem")
+        .then(res => res.json())
+        .then(dados => {
+           
+            dadosPersonagem = dados;
+
+            var labelsPersonagem = [];
+            var votosPersonagem = [];
+
+            for (var i = 0; i < dados.length; i++) {
+
+                var idPersonagem = dados[i].fkpersonagem;
+                var nomePersonagem = "Desconhecido";
+
+                for (var j = 0; j < dadosPersonagemLocal.length; j++) {
+
+                    if (dadosPersonagemLocal[j].idpersonagem == idPersonagem) {
+                        nomePersonagem = dadosPersonagemLocal[j].nome;
+                        break;
+                    }
+                }
+
+                labelsPersonagem.push(nomePersonagem);
+                votosPersonagem.push(dados[i].votos);
+            }
+
+            console.log("Labels personagens:", labelsPersonagem);
+            console.log("Votos personagens:", votosPersonagem);
+
+            criarGrafico_personagem(labelsPersonagem, votosPersonagem);
+
+            atualizarKpiPersonagem();
+        })
+        .catch(erro => console.log("Erro ao carregar votos: ", erro));
+}
+
+
+function carregarVotos_parte() {
+  fetch("/selecao/votos-parte")  
+    .then(res => res.json())
+    .then(dados => {
+      console.log("RESPOSTA DA API /votos-parte:", dados);
+
+      dadosParte = dados;
+
+      var labelsPartes = [];
+      var votosPartes = [];
+
+      for (var i = 0; i < dados.length; i++) {
+        labelsPartes.push(nomesDasPartes[dados[i].fktemporada]);
+        votosPartes.push(dados[i].votos);
       }
-    });
+
+      atualizarGraficoFavoritos(grafPartes, labelsPartes, votosPartes);
+      atualizarTodasKPI();
+    })
+    .catch(erro => console.log("Erro ao carregar votos: ", erro));
+}
 
 
-    var labelsPartes = [];
-    var votosPartes = [];
-    
-    for (var i = 0; i < dadosParte.length; i++) {
-      labelsPartes.push(dadosParte[i].parte);
-      votosPartes.push(dadosParte[i].votos);
+
+function criarGrafico_personagem(labelsPersonagem, votosPersonagem) {
+  grafPersonagem = new Chart(document.getElementById("linha").getContext("2d"), {
+    type: 'bar',
+    data: {
+      labels: labelsPersonagem,
+      datasets: [{
+        label: 'Votos',
+        data: votosPersonagem,
+        backgroundColor: '#DBAF4F',
+        borderColor: '#DBAF4F',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      plugins: { legend: { labels: { color: '#fff' } } },
+      scales: {
+        x: { ticks: { color: '#fff' } },
+        y: { ticks: { color: '#fff' } }
+      }
     }
+  });
+}
 
-    grafPartes = new Chart(document.getElementById("barra").getContext("2d"), {
-      type: 'bar',
-      data: {
-        labels: labelsPartes,
-        datasets: [{
-          label: 'Votos',
-          data: votosPartes,
-          backgroundColor: '#DBAF4F',
-          borderColor: '#DBAF4F',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#fff'
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    color: '#fff'
-                }
-            },
-            y: {
-                ticks: {
-                    color: '#fff'
-                }
-            }
+carregarVotos_personagem();
+carregarVotos_parte();
+
+// Criar gráfico vazio
+grafPartes = new Chart(document.getElementById("barra").getContext("2d"), {
+    type: 'bar',
+    data: { labels: [], 
+      datasets: [
+        { data: [], 
+          backgroundColor: '#4FDBAF', 
+          borderColor: '#4FDBAF', 
+          borderWidth: 1 }
+      ] },
+    options: { 
+      plugins: 
+      { legend: { 
+        labels: { 
+          color: '#fff' } 
+        } }, scales: {
+           x: { ticks: 
+            { color: '#fff' } 
+          }, y: { ticks: 
+            { color: '#fff' } 
+          } } 
+        
         }
-    }
-    });
+});
 
-    atualizarKPI();
+
+// REGISTRAR VOTO
+function registrarVoto() {
+  var fkusuario = sessionStorage.ID_USUARIO;
+  var fkpersonagem = Number(document.getElementById("selectPersonagem").value);
+  var fktemporada = Number(document.getElementById("selectParte").value);
+
+  console.log("fkusuario:", fkusuario);
+  console.log("fkpersonagem:", fkpersonagem);
+  console.log("fktemporada:", fktemporada);
+
+  for (var i = 0; i < dadosPersonagem.length; i++) {
+    if (dadosPersonagem[i].idpersonagem == fkpersonagem) {
+      dadosPersonagem[i].votos++;
+    }
   }
 
-
-  function votacao() {
-    
-    mostrarGrafico.style.display = "none";
-    mostrarVotacao.style.display = "block";
-
-    var selectPersonagem = document.getElementById("selectPersonagem");
-    var selectParte = document.getElementById("selectParte");
-
-    selectPersonagem.innerHTML = "";
-    selectParte.innerHTML = "";
-
-    //percorre pelos dados dos personagens e partes e coloca nos options do select
-      for (var i = 0; i < dadosPersonagem.length; i++) {
-      selectPersonagem.innerHTML += `<option value="${dadosPersonagem[i].idpersonagem}">
-        ${dadosPersonagem[i].nome}
-        </option>
-        `
-    }
-
-    for (var i = 0; i < dadosParte.length; i++) {
-      selectParte.innerHTML += `<option value="${dadosParte[i].idtemporada}">
-        ${dadosParte[i].parte}
-        </option>
-      `
+  for (var i = 0; i < dadosParte.length; i++) {
+    if (dadosParte[i].idtemporada == fktemporada) {
+      dadosParte[i].votos++;
     }
   }
 
+  var labelsPersonagem = [];
+  var votosPersonagem = [];
 
+  for (var i = 0; i < dadosPersonagem.length; i++) {
+    labelsPersonagem.push(dadosPersonagem[i].nome);
+    votosPersonagem.push(dadosPersonagem[i].votos);
+  }
 
-  function registrarVoto() {
-    var fkusuario = sessionStorage.ID_USUARIO;
-    var fkpersonagem = document.getElementById("selectPersonagem").value;
-    var fktemporada = document.getElementById("selectParte").value;
+  var labelsPartes = [];
+  var votosPartes = [];
 
-    console.log("fkusuario:", fkusuario);
-    console.log("fkpersonagem:", fkpersonagem);
-    console.log("fktemporada:", fktemporada);
+  for (var i = 0; i < dadosParte.length; i++) {
+    labelsPartes.push(nomesDasPartes[dadosParte[i].idtemporada]);
+    votosPartes.push(dadosParte[i].votos);
+  }
 
-    // se encontrar o item correspondente ao voto ele incrementa
-    for (var i = 0; i < dadosPersonagem.length; i++) {
-      if (dadosPersonagem[i].idpersonagem == fkpersonagem) {
-        dadosPersonagem[i].votos++;
-      }
-    }
+  atualizarGraficoFavoritos(grafPersonagem, labelsPersonagem, votosPersonagem);
+  atualizarGraficoFavoritos(grafPartes, labelsPartes, votosPartes);
 
-    for (var i = 0; i < dadosParte.length; i++) {
-      if (dadosParte[i].idtemporada == fktemporada) {
-        dadosParte[i].votos++;
-      }
-    }
+  atualizarTodasKPI();
 
-    //refaz a separação dos dados atualizados
-    var labelsPersonagem = [];
-    var votosPersonagem = [];
-
-    for (var i = 0; i < dadosPersonagem.length; i++) {
-      labelsPersonagem.push(dadosPersonagem[i].nome);
-      votosPersonagem.push(dadosPersonagem[i].votos);
-    }
-
-    var labelsPartes = [];
-    var votosPartes = [];
-    
-    for (var i = 0; i < dadosParte.length; i++) {
-      labelsPartes.push(dadosParte[i].fktemporada);
-      votosPartes.push(dadosParte[i].votos);
-    }
-
-    atualizarGraficoFavoritos(grafPersonagem, labelsPersonagem, votosPersonagem);
-    atualizarGraficoFavoritos(grafPartes, labelsPartes, votosPartes);
-
-    atualizarKPI();
-    
-    mostrarVotacao.style.display = "none";
-    mostrarGrafico.style.display = "block";
-
-    var fkusuario = sessionStorage.ID_USUARIO;
+  mostrarVotacao.style.display = "none";
+  mostrarGrafico.style.display = "block";
 
   registrarVotacao(fkusuario, fkpersonagem, fktemporada);
+}
 
-//  var fkusuario = sessionStorage.ID_USUARIO;
-//      var fkpersonagem = document.getElementById("selectPersonagem").value;
-//     var fkparte = document.getElementById("selectParte").value;
+// ATUALIZAR GRAFICO
 
+function atualizarGraficoFavoritos(myChart, labelsNovos, dadosNovos) {
+  myChart.data.labels = labelsNovos;
+  myChart.data.datasets[0].data = dadosNovos;
+  myChart.update();
+}
 
-//     console.log("fkusuario:", fkusuario);
-//     console.log("personagem:", fkpersonagem);
-//     console.log("parte:", fkparte);
+// REGISTRANA API 
 
-//     // Atualiza votos localmente
-//     for (var i = 0; i < dadosPersonagem.length; i++) {
-//       if (dadosPersonagem[i].nome == fkpersonagem) {
-//         dadosPersonagem[i].votos++;
-//       }
-//     }
-
-//     for (var i = 0; i < dadosParte.length; i++) {
-//       if (dadosParte[i].parte == fkparte) {
-//         dadosParte[i].votos++;
-//       }
-//     }
-
-//     // Atualiza gráficos
-//     var labelsPersonagem = dadosPersonagem.map(p => p.nome);
-//     var votosPersonagem = dadosPersonagem.map(p => p.votos);
-
-//     var labelsPartes = dadosParte.map(p => p.parte);
-//     var votosPartes = dadosParte.map(p => p.votos);
-
-//     atualizarGraficoFavoritos(grafPersonagem, labelsPersonagem, votosPersonagem);
-//     atualizarGraficoFavoritos(grafPartes, labelsPartes, votosPartes);
-//     atualizarKPI();
-
-//     mostrarVotacao.style.display = "none";
-//     mostrarGrafico.style.display = "block";
-
-//     // Envia para o backend
-//     registrarVotacao(fkusuario, fkpersonagem, fkparte);
-    
-  }
-
-  function atualizarGraficoFavoritos(myChart, labelsNovos, dadosNovos) {
-    myChart.data.labels = labelsNovos;
-    myChart.data.datasets[0].data = dadosNovos;
-    myChart.update();
-  }
-
-  function atualizarKPI() {
-    var total = 0;
-    // soma todos os votos
-    for (var i = 0; i < dadosPersonagem.length; i++) {
-      total += dadosPersonagem[i].votos;
-    }
-    kpiTotal.innerHTML = total;
-
-    //percorre pra encontrar o item com o maior numero de votos
-    var maiorVoto = -1;
-    var favorito = "";
-    for (var i = 0; i < dadosPersonagem.length; i++) {
-      if (dadosPersonagem[i].votos > maiorVoto) {
-        maiorVoto = dadosPersonagem[i].votos;
-        favorito = dadosPersonagem[i].nome;
+function registrarVotacao(fkusuario, fkpersonagem, fktemporada) {
+  fetch("/selecao/selecionar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fkusuario: fkusuario,
+        fkpersonagem: fkpersonagem,
+        fktemporada: fktemporada
+      })
+    })
+    .then(resposta => {
+      if (resposta.ok) {
+        console.log("Votação registrada com sucesso");
+      } else {
+        console.log("Falha ao registrar a votação");
       }
-    }
+    })
+    .catch(erro => console.error("Erro na API:", erro));
+}
+function atualizarTodasKPI() {
+    fetch("/selecao/votos-personagem")
+        .then(res => res.json())
+        .then(personagens => {
 
-    kpiPersonagem.innerHTML = favorito;
+            var total = 0;
+            var personagemNome = "";
+            var maior = -1;
 
-    // Parte favorita
-    maiorVoto = -1;
-    favorito = "";
-    for (var i = 0; i < dadosParte.length; i++) {
-      if (dadosParte[i].votos > maiorVoto) {
-        maiorVoto = dadosParte[i].votos;
-        favorito = dadosParte[i].parte;
-      }
-    }
-    kpiParte.innerHTML = favorito;
-  }
+            for (var i = 0; i < personagens.length; i++) {
+                total += personagens[i].votos;
 
-inicializarGraficos();
+                if (personagens[i].votos > maior) {
+                    maior = personagens[i].votos;
 
- function registrarVotacao(fkusuario, fkpersonagem, fktemporada) {
-        fetch("/selecao/selecionar", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                fkusuario: fkusuario,
-                fkpersonagem: fkpersonagem,
-                fktemporada: fktemporada
-            })
-        })
-        .then(resposta => {
-            if (resposta.ok) {
-                console.log("Votação registrado com sucesso");
-            } else {
-                console.log("Falha ao registrar a votação");
-                alert("Ops, não conseguimos registrar sua votação. Tente novamente.")
+                    for (var j = 0; j < dadosPersonagemLocal.length; j++) {
+                        if (dadosPersonagemLocal[j].idpersonagem == personagens[i].fkpersonagem) {
+                            personagemNome = dadosPersonagemLocal[j].nome;
+                            break;
+                        }
+                    }
+                }
             }
+
+            document.getElementById("kpiTotal").textContent = total;
+            document.getElementById("kpiPersonagem").textContent = personagemNome;
         })
-        .catch(erro => {
-            console.error("Erro na comunicação com a API", erro)
-        });
-    }
+        .catch(err => console.log("Erro KPI personagem:", err));
 
-  window.onload = () => {
-        var usuarioID = sessionStorage.ID_USUARIO;
-        fetch(`/perfil/exibir?id=${usuarioID}`)
-            .then(res => res.json())
-            .then(usuarioArray => {
+    fetch("/selecao/votos-parte")
+        .then(res => res.json())
+        .then(partes => {
 
-                var usuario = usuarioArray[0]
-                document.getElementById("nome").textContent = usuario.nome;
-                document.getElementById("input_nome").textContent = usuario.nome;
-                document.getElementById("input_email").textContent = usuario.email;
-            })
-            .catch(err => console.error("Erro ao carregar perfil: ", err));
-    }
+            var maior = -1;
+            var parteNome = "";
 
+            for (var i = 0; i < partes.length; i++) {
+                var idTemp = partes[i].fktemporada;
+
+                if (partes[i].votos > maior) {
+                    maior = partes[i].votos;
+                    parteNome = nomesDasPartes[idTemp];
+                }
+            }
+
+            document.getElementById("kpiParte").textContent = parteNome;
+        })
+        .catch(err => console.log("Erro KPI parte:", err));
+}
+
+
+// PERFIL DO USUÁRIO
+
+window.onload = () => {
+  var usuarioID = sessionStorage.ID_USUARIO;
+
+  fetch(`/perfil/exibir?id=${usuarioID}`)
+    .then(res => res.json())
+    .then(usuarioArray => {
+      var usuario = usuarioArray[0];
+      document.getElementById("nome").textContent = usuario.nome;
+      document.getElementById("input_nome").textContent = usuario.nome;
+      document.getElementById("input_email").textContent = usuario.email;
+    })
+    .catch(err => console.error("Erro ao carregar perfil: ", err));
+};
 </script>
- 
+
