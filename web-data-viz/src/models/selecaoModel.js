@@ -25,18 +25,16 @@ function votosPersonagem() {
     return database.executar(instrucao);
 }
 
-
-function votosTemporada() {
-    return database.executar (`
+function votosPorParte() {
+    var instrucao = `
         SELECT fktemporada, COUNT(*) AS votos
         FROM selecao
         GROUP BY fktemporada;
-        `)
+    `;
+    return database.executar(instrucao);
 }
 
 function atualizar(fkusuario, idpersonagem, idtemporada) {
-    console.log("Atualizando seleção do usuário:", fkusuario);
-
     var instrucao = `
         UPDATE selecao
         SET fkpersonagem = ${idpersonagem},
@@ -49,29 +47,9 @@ function atualizar(fkusuario, idpersonagem, idtemporada) {
     return database.executar(instrucao);
 }
 
-function listarJojoPrincipais() {
-    var instrucao = `
-        SELECT idPersonagem, nomePersonagem
-        FROM personagem
-        WHERE idPersonagem IN (1,2,3,4,5,6,7,9);
-    `;
-    return database.executar(instrucao);
-}
-
-function votosPorParte() {
-    return database.executar(`
-        SELECT fktemporada, COUNT(*) AS votos
-        FROM selecao
-        GROUP BY fktemporada;
-    `);
-}
-
-
 module.exports = {
-     selecionar,
+    selecionar,
     votosPersonagem,
-    votosTemporada,
     atualizar,
-    listarJojoPrincipais,
     votosPorParte
 };

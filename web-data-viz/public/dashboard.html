@@ -38,7 +38,7 @@
         </div>
 
         <div class="sair-nav">
-            <p>Sair</p>
+            <a href="index.html"><p>Sair</p></a>
         </div>
     </nav>
 
@@ -281,53 +281,31 @@ grafPartes = new Chart(document.getElementById("barra").getContext("2d"), {
 });
 
 
-// REGISTRAR VOTO
 function registrarVoto() {
   var fkusuario = sessionStorage.ID_USUARIO;
   var fkpersonagem = Number(document.getElementById("selectPersonagem").value);
   var fktemporada = Number(document.getElementById("selectParte").value);
 
-  console.log("fkusuario:", fkusuario);
-  console.log("fkpersonagem:", fkpersonagem);
-  console.log("fktemporada:", fktemporada);
+  console.log("Registrando voto:", fkusuario, fkpersonagem, fktemporada);
 
-  for (var i = 0; i < dadosPersonagem.length; i++) {
-    if (dadosPersonagem[i].idpersonagem == fkpersonagem) {
-      dadosPersonagem[i].votos++;
-    }
-  }
 
-  for (var i = 0; i < dadosParte.length; i++) {
-    if (dadosParte[i].idtemporada == fktemporada) {
-      dadosParte[i].votos++;
-    }
-  }
+  fetch("/selecao/selecionar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ fkusuario, fkpersonagem, fktemporada })
+  })
+    .then(resposta => {
+      if (!resposta.ok) throw new Error("Falha ao registrar voto");
 
-  var labelsPersonagem = [];
-  var votosPersonagem = [];
+      console.log("Voto registrado com sucesso!");
 
-  for (var i = 0; i < dadosPersonagem.length; i++) {
-    labelsPersonagem.push(dadosPersonagem[i].nome);
-    votosPersonagem.push(dadosPersonagem[i].votos);
-  }
-
-  var labelsPartes = [];
-  var votosPartes = [];
-
-  for (var i = 0; i < dadosParte.length; i++) {
-    labelsPartes.push(nomesDasPartes[dadosParte[i].idtemporada]);
-    votosPartes.push(dadosParte[i].votos);
-  }
-
-  atualizarGraficoFavoritos(grafPersonagem, labelsPersonagem, votosPersonagem);
-  atualizarGraficoFavoritos(grafPartes, labelsPartes, votosPartes);
-
-  atualizarTodasKPI();
-
-  mostrarVotacao.style.display = "none";
-  mostrarGrafico.style.display = "block";
-
-  registrarVotacao(fkusuario, fkpersonagem, fktemporada);
+      return Promise.all([carregarVotos_personagem(), carregarVotos_parte()]);
+    })
+    .then(() => {
+      document.getElementById("mostrarVotacao").style.display = "none";
+      document.getElementById("mostrarGrafico").style.display = "block";
+    })
+    .catch(erro => console.error("Erro ao registrar voto:", erro));
 }
 
 // ATUALIZAR GRAFICO

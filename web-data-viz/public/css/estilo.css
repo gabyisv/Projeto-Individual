@@ -166,3 +166,7 @@ a {
   color: #ffff;
   font-weight: 600;
 }
+
+.msg_erro {
+  font-size: 12px;
+}

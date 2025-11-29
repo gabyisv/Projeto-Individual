@@ -57,26 +57,6 @@ function votosPersonagem(req, res) {
 }
 
 
-function votosTemporada(req, res) {
-    selecaoModel.votosTemporada()
-        .then(function(resultado) {
-            res.status(200).json(resultado)
-        })
-        .catch(function(erro) {
-            console.log("Erro ao buscar votos por temporada:", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        })
-}
-
-function listarJojoPrincipais(req, res) {
-        selecaoModel.listarJojoPrincipais()
-        .then(resultado => res.status(200).json(resultado))
-        .catch(erro => {
-            console.log("Erro ao buscar personagens:", erro.sqlMessage);
-            res.status(500).json(erro.sqlMessage);
-        });
-}
-
 function votosPorParte(req, res) {
     selecaoModel.votosPorParte()
         .then(resultado => res.status(200).json(resultado))
@@ -92,7 +72,5 @@ module.exports = {
     selecionar,
     atualizar,
     votosPersonagem,
-    votosTemporada,
-    listarJojoPrincipais,
     votosPorParte
 }
